@@ -73,7 +73,7 @@ git clone https://github.com/hubqoaing/RNA_v2
 
 Secondly, go to the ./setting file, and change the following values to your own path:
 ```python
-self.Database       = "DIR/TO/DATABASE           #line 56
+self.Database       = "DIR/TO/DATABASE"          #line 56
 self.sftw_py        = "DIR/TO/SOFTWARE_EXE_FILE" #line 78
 self.sftw_pl        = "DIR/TO/SOFTWARE_EXE_FILE"
 self.sftw_tophat_dir= "DIR/TO/SOFTWARE_EXE_FILE"
