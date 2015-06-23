@@ -128,7 +128,7 @@ Comments this command
 ```python
         my_job.running_multi(cpu=8, is_debug = self.is_debug)
 ```
-and using this command in modules in ./frame 
+and using this command in modules in ./frame/*py
 ```
        my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 ```
