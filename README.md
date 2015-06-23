@@ -111,7 +111,7 @@ Before running this pipeline, put the fastq reads in the ./00.0.raw_data diction
 mkdir 00.0.raw_data
 for i in `tail -n +2 sample_input.xls | awk '{print $1}`
 do
-    mkdir 00.0.raw_data/$i && ln -s PATH/TO/RAW_DATA/$i/*gz $i
+    mkdir 00.0.raw_data/$i && ln -s PATH/TO/RAW_DATA/$i/*gz 00.0.raw_data/$i
 done
 ```
 
