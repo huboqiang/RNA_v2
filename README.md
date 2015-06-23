@@ -61,7 +61,8 @@ make
 cd ..
 mv bedtools-2.24.0.tar.gz install_packages
 
-
+### install HTSeq
+pip install HTSeq
 ```
 
 After that, download this script:
