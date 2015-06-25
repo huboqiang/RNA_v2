@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 use Getopt::Long;
-use PerlIO::gzip;
+#use PerlIO::gzip;
 
 
 ####
@@ -111,9 +111,11 @@ if ($end == 2) {
 
 	#-open the output files
 
-	open OUT_1,">:gzip","$outdir/$sample/1.cln.fq.gz" or die $!;
-	open OUT_2,">:gzip","$outdir/$sample/2.cln.fq.gz" or die $!;
+#	open OUT_1,">:gzip","$outdir/$sample/1.cln.fq.gz" or die $!;
+#	open OUT_2,">:gzip","$outdir/$sample/2.cln.fq.gz" or die $!;
 	
+    open OUT_1,"| gzip > $outdir/$sample/1.cln.fq.gz" or die $!;
+    open OUT_2,"| gzip > $outdir/$sample/2.cln.fq.gz" or die $!;
 
 	#---------------------------read in the reads information-----------------------#
 
@@ -247,11 +249,12 @@ else {
 
 	#-open the input files
    print $file;
-	open IN_1,"<:gzip","$file" or die $!;
+   open IN_1,"zcat $file |" or die "Cannot open file $file\n", $!;
+#	open IN_1,"<:gzip","$file" or die $!;
 
 	#-open the output files
-	
-	open OUT_1,">:gzip","$outdir/$sample/1.cln.fq.gz" or die $!;
+    open OUT_1," | gzip > $outdir/$sample/1.cln.fq.gz" or die $!;
+#	open OUT_1,">:gzip","$outdir/$sample/1.cln.fq.gz" or die $!;
 
 	#---------------------------read in the reads information-----------------------#
 
