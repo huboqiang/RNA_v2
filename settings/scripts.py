@@ -474,7 +474,7 @@ out_dir=$repeat_dir/$brief_name
 
 $samtools_exe view -F 0x0004 $in_bam                                       |\\
     grep -v ERCC-00* | grep -v RGC-CRE                                     |\\
-    grep -v RGC-GFP  | grep -v RGC-mRFP |grep NH:i:1                       |\\
+    grep -v RGC-GFP  | grep -v RGC-mRFP |grep '\bNH:i:1\b'                 |\\
     awk '{OFS="\\t"; print $3,$4,$4+length($10),$1 }'                       \\
        >${out_dir}/repeat_result.bed
 
