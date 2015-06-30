@@ -33,7 +33,7 @@ class RNA_Quantification(m_scpt.Scripts):
             not included in UCSC refGene), it will be merged into a new gtf
             for gene quantification.
         """
-        self.s03_HTSeq_known()
+#        self.s03_HTSeq_known()
         if not given_GTF:
             self.s04_novo_1_cufflinks_u()
             self.s04_novo_2_cuffcomp_trans()
@@ -162,7 +162,7 @@ class RNA_Quantification(m_scpt.Scripts):
             l_sh_work.append("sh %s %s %s" %(sh_file, brief_name,unknown_GTF))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-#        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=8, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
         m_01.make_dir([ self.dir_HTS_result ])
