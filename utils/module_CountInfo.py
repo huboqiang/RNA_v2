@@ -29,7 +29,7 @@ class CountInfo(object):
         print >>f_out_file_gene, out_info
         print >>f_out_file_stat, out_info
         
-        shell_info = "paste %s" % (" ".join( self.l_file))      
+        shell_info = "paste %s" % (" ".join( self.l_file))     
         p=subprocess.Popen(shell_info,stdout=subprocess.PIPE,shell=True)
         for line in p.stdout:
             line = line.strip('\n')
