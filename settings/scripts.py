@@ -443,11 +443,11 @@ $sftw_cflk_dir/cuffnorm                                                     \\
 in_bam=$tophat_dir/$brief_name/accepted_hits.bam
 out_dir=$dir_cufflinks/$brief_name
 
-#$sftw_cflk_dir/cufflinks                                                    \\
-#   -p 8                                                                     \\
-#   -o $out_dir                                                              \\
-#   -G $use_gtf                                                              \\
-#   $in_bam
+$sftw_cflk_dir/cufflinks                                                    \\
+   -p 8                                                                     \\
+   -o $out_dir                                                              \\
+   -G $use_gtf                                                              \\
+   $in_bam
 
 $py_exe $py_grep_FPKM $out_dir/genes.fpkm_tracking $use_gtf                 \\
     >$out_dir/$brief_name.FPKM.txt
