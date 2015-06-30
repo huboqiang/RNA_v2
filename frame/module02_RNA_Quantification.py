@@ -33,7 +33,7 @@ class RNA_Quantification(m_scpt.Scripts):
             not included in UCSC refGene), it will be merged into a new gtf
             for gene quantification.
         """
-#        self.s03_HTSeq_known()
+        self.s03_HTSeq_known()
         if not given_GTF:
             self.s04_novo_1_cufflinks_u()
             self.s04_novo_2_cuffcomp_trans()
