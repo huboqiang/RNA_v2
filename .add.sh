@@ -151,4 +151,19 @@ git commit -m "Model for dealing with statistics information on pipeline."
 #git add module_RepeatCount.py
 #git commit -m "Module for RPKM of repeat elements."
 
+
+git add frame/module02_RNA_Quantification.py
+git commit -m "Using cufflinks to calculate FPKM to generate a text file rather than a binnary file using cuffquant."
+git add frame/module03_Stat_Sample.py
+git commit -m "Add function to calculate Repeat elements' RPKM."
+git add settings/scripts.py
+git commit -m "Add function for cufflinks."
+git add utils/module_RepeatCount.py
+git commit -m "Add function to calculate Repeat elements' RPKM."
+git add utils/module_refGene.py
+git commit -m "Add function to find out the splicing sites using refGene.txt file."
+git add .add.sh
+git commit -m "Add log."
+
+
 git push -u origin master
