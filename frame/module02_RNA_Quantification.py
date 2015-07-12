@@ -33,7 +33,7 @@ class RNA_Quantification(m_scpt.Scripts):
             not included in UCSC refGene), it will be merged into a new gtf
             for gene quantification.
         """
-#        self.s03_HTSeq_known()
+        self.s03_HTSeq_known()
         if not given_GTF:
             self.s04_novo_1_cufflinks_u()
             self.s04_novo_2_cuffcomp_trans()
@@ -68,8 +68,11 @@ class RNA_Quantification(m_scpt.Scripts):
         else:
             prefix = ".".join(given_GTF.split(".")[:-1])
             given_GTF_ERCC = "%s.ERCC.gtf" % (prefix)
+
             self.s05_2_extra_makeGTF(given_GTF, given_GTF_ERCC)
-            
+            m_gtf.GTFFeature(given_GTF)
+            m_gtf.GTFFeature(given_GTF_ERCC)
+                        
             self.s06_1_cufflinks(self.dir_cufflinks_known, given_GTF)
             self.s06_1_cufflinks(self.dir_cufflinks_known_ERCC, given_GTF_ERCC)
 #            self.s06_cuffquant(self.dir_cuffquant, given_GTF)
