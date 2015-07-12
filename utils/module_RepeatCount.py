@@ -19,7 +19,7 @@ class RepeatCount(object):
     def generate_mat(self):
         if not os.path.isdir( self.out_dir ):
             os.mkdir( self.out_dir )
-        out_file_gene    = "%s/merge.Repeat.Count.xls" % ( self.out_dir )
+        out_file_gene   = "%s/merge.Repeat.Count.xls" % ( self.out_dir )
         f_out_file_gene  = open( out_file_gene,"w" )
 
         out_info    = "Chrom\tBeg\tEnd\tElement\tSubGroup\tGroup\t%s" % ( "\t".join( self.l_sample ) )
@@ -29,7 +29,7 @@ class RepeatCount(object):
         p=subprocess.Popen(shell_info,stdout=subprocess.PIPE,shell=True)
         for line in p.stdout:
             line = line.strip('\n')
-            f    = line.split()
+            f   = line.split()
             info = "\t".join(f[0:6])
             for i,val in enumerate(f):
                 if i % 7 == 6:
@@ -40,6 +40,29 @@ class RepeatCount(object):
         p.stdout.close()  
         f_out_file_gene.close()
       
+    def div_total_reads(self, np_align_reads):
+        infile = "%s/merge.Repeat.Count.xls" % ( self.out_dir )
+        outfile_element  = "%s/merge.Repeat.RPKM.xls"  % ( self.out_dir )
+        f_outfile_element= open(outfile_element, "w")
+
+        f_infile = open(infile, "r")
+        line_h = f_infile.readline()
+        line_h = line_h.strip()
+        print >>f_outfile_element, line_h
+        
+        for line in f_infile:
+            line = line.strip()
+            f    = line.split()
+            length = int(f[2]) - int(f[1])
+            np_cnt = np.array(f[6:], dtype="float")
+            np_cnt_norm = np_cnt*10**9/(np_align_reads*length)
+            np_out = np.array(np_cnt_norm, dtype="string")
+            out = "%s\t%s" % ( "\t".join(f[0:6]), "\t".join(np_out) )
+            print >>f_outfile_element, out
+
+        f_outfile_element.close()
+        f_infile.close()
+
     def element_group_subgroup_FPKM_sum(self,np_align_reads):
         infile = "%s/merge.Repeat.Count.xls" % ( self.out_dir )
         
@@ -48,15 +71,15 @@ class RepeatCount(object):
         
         outfile_element  = "%s/merge.Repeat.SumCount.element.xls"  % ( self.out_dir )
         outfile_subgroup = "%s/merge.Repeat.SumCount.subgroup.xls" % ( self.out_dir )
-        outfile_group    = "%s/merge.Repeat.SumCount.group.xls"    % ( self.out_dir )
+        outfile_group   = "%s/merge.Repeat.SumCount.group.xls" % ( self.out_dir )
         
         f_outfile_element  = open( outfile_element ,"w" )
         f_outfile_subgroup = open( outfile_subgroup,"w" )
-        f_outfile_group    = open( outfile_group   ,"w" )
+        f_outfile_group = open( outfile_group   ,"w" )
         
         print >>f_outfile_element ,"Element\t%s"    % ( "\t".join( m_matrix.rowname ) )
         print >>f_outfile_subgroup,"SubGroup\t%s"   % ( "\t".join( m_matrix.rowname ) )
-        print >>f_outfile_group   ,"Group\t%s"      % ( "\t".join( m_matrix.rowname ) )
+        print >>f_outfile_group   ,"Group\t%s"    % ( "\t".join( m_matrix.rowname ) )
         
         l_repInfo  = m_matrix.colname
         np_element  = np.array( [ "%s" % ( inf.split('\t')[3] ) for inf in l_repInfo ],dtype="string" )
@@ -65,7 +88,7 @@ class RepeatCount(object):
         
         for elem in sorted( set(np_element) ):
             idx = (np_element ==elem)
-            sub_mat      = m_matrix.matrix[ idx,: ]
+            sub_mat   = m_matrix.matrix[ idx,: ]
             sum_FPKM     = np.sum( sub_mat,axis=0 )
             sum_FPKM    /= np_align_reads 
             sum_FPKM    *= 1000000 # normalize to each 100000
@@ -75,7 +98,7 @@ class RepeatCount(object):
 
         for subgroup in sorted( set(np_subgroup) ):
             idx = (np_subgroup ==subgroup)
-            sub_mat      = m_matrix.matrix[ idx,: ]
+            sub_mat   = m_matrix.matrix[ idx,: ]
             sum_FPKM     = np.sum( sub_mat,axis=0 )
             sum_FPKM    /= np_align_reads 
             sum_FPKM    *= 1000000 # normalize to each 100000
@@ -86,7 +109,7 @@ class RepeatCount(object):
         
         for group in sorted( set(np_group) ):
             idx = (np_group ==group)
-            sub_mat      = m_matrix.matrix[ idx,: ]
+            sub_mat   = m_matrix.matrix[ idx,: ]
             sum_FPKM     = np.sum( sub_mat,axis=0 )
             sum_FPKM    /= np_align_reads 
             sum_FPKM    *= 1000000 # normalize to each 100000
