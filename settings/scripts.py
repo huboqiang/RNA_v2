@@ -390,7 +390,7 @@ fi
         l_sh_info.append("dir_database=%s/$ref"% (self.Database))
         l_sh_info.append("dir_path=%s"         % (self.path))
         l_sh_info.append("""
-cat $given_GTF $dir_path/database/ERCC.gtf >$dir_database/$given_GTF_ERCC
+cat $given_GTF $dir_path/database/ERCC.gtf >$given_GTF_ERCC
         """)
         return l_sh_info
 
