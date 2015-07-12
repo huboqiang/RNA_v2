@@ -191,7 +191,79 @@ done >%s
             f    = line.split()
             self.length[ f[0] ] = int( f[1] )
         f_inFai.close()
-      
+    
+    def RefSplicing(self):
+        all_splice_site    = "%s.all_splicing.xls"    % (self.prefix)        
+        f_infile_sort     =  open(self.infile_sort,"r")
+        
+        f_all_splice_site    = open(all_splice_site    ,"w")
+        
+        self.gen_splice = {}
+        for line in f_infile_sort:
+            line = line.strip('\n')
+            line_info = refGeneLine(line)
+            chrom = line_info.chrom
+            gen   = line_info.name2
+            tid   = line_info.name
+            np_beg = line_info.exonStarts
+            np_end = line_info.exonEnds
+            
+            if gen not in self.gen_splice:
+                self.gen_splice[gen] = {}
+            
+            self.gen_splice[gen][tid] = {
+                'chr': chrom, 
+                'beg': np_beg, 
+                'end': np_end,
+                'str': line_info.strand,
+            }
+        f_infile_sort.close()
+        
+        for gen in sorted(self.gen_splice):
+            tid_len = len(self.gen_splice[gen])
+            l_pos_cnt  = {}
+            l_pos_type = {}
+            l_tid = self.gen_splice[gen].keys()
+            for tid in self.gen_splice[gen]:
+                for pos in self.gen_splice[gen][tid]['beg']:
+                    if pos not in l_pos_cnt:
+                        l_pos_cnt[pos]  = 0
+                        l_pos_type[pos] = 'beg'
+                        if line_info.strand == "-":
+                            l_pos_type[pos] = 'end'
+                    l_pos_cnt[pos] += 1
+                    
+                for pos in self.gen_splice[gen][tid]['end']:
+                    if pos not in l_pos_cnt:
+                        l_pos_cnt[pos] = 0
+                        l_pos_type[pos] = 'end'
+                        if line_info.strand == "-":
+                            l_pos_type[pos] = 'beg'
+                    l_pos_cnt[pos] += 1
+                    
+            for pos in l_pos_cnt:
+                chrom  = self.gen_splice[gen][l_tid[0]]['chr']
+                strand = self.gen_splice[gen][l_tid[0]]['str']
+                
+                stat = "diff"
+                if l_pos_cnt[pos] == tid_len:
+                    ### this splicing sites appeared in all samples. Common
+                    stat = "common"
+                
+                l_out = [
+                    chrom,
+                    pos,
+                    pos,
+                    strand,
+                    l_pos_type[pos],
+                    stat,
+                    gen
+                ]
+                l_out = [ str(s) for s in l_out ]
+                print >>f_all_splice_site, "\t".join(l_out)
+        
+        f_all_splice_site.close()
+    
     def refGene2bed(self,up_stream,down_stream,ext_type=""):
         self.refGene_ext_bed = "%s.up%d_down%d.%sBsorted.bed"               %\
             (self.prefix, up_stream, down_stream, ext_type)
