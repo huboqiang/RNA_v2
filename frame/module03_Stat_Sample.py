@@ -49,10 +49,19 @@ class SampStat(m_scpt.Scripts):
         l_info = [
             "Rename", "Brief_name", "Raw_Reads", "Clean_Reads",
             "Pre_Map_Reads", "Aligned_Reads", "HTSseq_Known_Reads",
-            "HTSeq_Refseq_Reads", "HTSeq_lncRNA_Reads", "HTSeq_Neo_Reads",
+            "HTSeq_Refseq_Reads", "HTSeq_lncRNA_Reads",
             "RFP_Reads", "GFP_Reads", "CRE_Reads", "ERCC_Reads",
             "RFP_polyA", "GFP_polyA", "CRE_polyA", "ERCC_Mols"
         ]
+        if not self.given_GTF:
+            l_info = [
+                "Rename", "Brief_name", "Raw_Reads", "Clean_Reads",
+                "Pre_Map_Reads", "Aligned_Reads",
+                "HTSeq_Refseq_Reads", "HTSeq_lncRNA_Reads",
+                "RFP_Reads", "GFP_Reads", "CRE_Reads", "ERCC_Reads",
+                "RFP_polyA", "GFP_polyA", "CRE_polyA", "ERCC_Mols"
+            ]
+            
         
         out_info = "\t".join(l_info)
 
@@ -138,7 +147,7 @@ class SampStat(m_scpt.Scripts):
                 Refseq_read  = self.__get_HTS_reads(Refseq_info ,samp) * 2
                 lncRNA_read  = self.__get_HTS_reads(lncRNA_info ,samp) * 2
                 NeoPass_read = 0
-                if self.given_GTF:
+                if not self.given_GTF:
                     NeoPass_read = self.__get_HTS_reads(NeoPass_info,samp) * 2
                 read_RFP     = SpikeIn_info.RGC_count['RGC-mRFP'] * 2
                 read_GFP     = SpikeIn_info.RGC_count['RGC-GFP' ] * 2
@@ -147,8 +156,8 @@ class SampStat(m_scpt.Scripts):
             else:
                 HTSseq_read  = self.__get_HTS_reads(HTS_info    ,samp)
                 Refseq_read  = self.__get_HTS_reads(Refseq_info ,samp)
-                lncRNA_read  = self.__get_HTS_reads(lncRNA_read ,samp)
-                if self.given_GTF:
+                lncRNA_read  = self.__get_HTS_reads(lncRNA_info ,samp)
+                if not self.given_GTF:
                     NeoPass_read = self.__get_HTS_reads(NeoPass_info,samp)
 
                 read_RFP     = SpikeIn_info.RGC_count['RGC-mRFP']
@@ -161,15 +170,24 @@ class SampStat(m_scpt.Scripts):
             mol_CRE  = self.samInfo_pd_RNA[idx]['CRE_polyA'].values[0]
             mol_ERCC = self.samInfo_pd_RNA[idx]['ERCC_time'].values[0]   *\
                         6.023*10**10
-            
+
             l_out = [
                 rename, brief_name,
                 QcStat_info.raw_reads, QcStat_info.cln_reads,
                 pre_map_read, aligned_read, HTSseq_read,
-                Refseq_read,  lncRNA_read,  NeoPass_read,
+                Refseq_read,  lncRNA_read, 
                 read_RFP, read_GFP,read_CRE, read_ERCC,
                 mol_RFP , mol_GFP ,mol_CRE, mol_ERCC
             ]
+            if not self.given_GTF:
+                l_out = [
+                    rename, brief_name,
+                    QcStat_info.raw_reads, QcStat_info.cln_reads,
+                    pre_map_read, aligned_read, HTSseq_read,
+                    Refseq_read,  lncRNA_read,  NeoPass_read,
+                    read_RFP, read_GFP,read_CRE, read_ERCC,
+                    mol_RFP , mol_GFP ,mol_CRE, mol_ERCC
+                ]
             l_out = [str(i) for i in l_out]
             print  >>f_out_file, "\t".join(l_out)
             
@@ -444,4 +462,5 @@ class SampStat(m_scpt.Scripts):
             self.dir_repeat_mrg
         )
         RepCnt.generate_mat()
+        RepCnt.div_total_reads(np_align_reads)
         RepCnt.element_group_subgroup_FPKM_sum(np_align_reads)
