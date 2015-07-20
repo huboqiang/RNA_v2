@@ -54,12 +54,8 @@ tar -zxvf cufflinks-2.2.1.Linux_x86_64.tar.gz
 mv cufflinks-2.2.1.Linux_x86_64.tar.gz install_packages
 
 ### install bedtools 2.24.0
-wget https://github.com/arq5x/bedtools2/releases/download/v2.24.0/bedtools-2.24.0.tar.gz
-tar -zxvf bedtools-2.24.0.tar.gz
-cd bedtools2
+git clone https://github.com/arq5x/bedtools2/
 make
-cd ..
-mv bedtools-2.24.0.tar.gz install_packages
 
 ### install HTSeq
 pip install HTSeq
