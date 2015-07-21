@@ -59,6 +59,15 @@ make
 
 ### install HTSeq
 pip install HTSeq
+
+### install tabix and bgzip
+wget //sourceforge.net/projects/samtools/files/tabix/tabix-0.2.6.tar.bz2
+tar -jxvf tabix-0.2.6.tar.bz2
+cd tabix-0.2.6
+make
+cd ..
+mv tabix-0.2.6.tar.bz2 install_packages
+
 ```
 
 After that, download this script:
