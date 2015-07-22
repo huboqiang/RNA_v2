@@ -39,6 +39,8 @@ class RNA_Quantification(m_scpt.Scripts):
             self.s04_novo_2_cuffcomp_trans()
             self.s04_novo_3_HTSeq_unknown()
             self.s05_1_extra_makeGTF(extra_GTF)
+            m_gtf.GTFFeature(self.merge_GTF)
+            m_gtf.GTFFeature(self.merge_GTF_ercc)
             self.s06_1_cufflinks(self.dir_cufflinks_known, self.merge_GTF)
             self.s06_1_cufflinks(self.dir_cufflinks_known_ERCC, self.merge_GTF_ercc)
 #            self.s06_cuffquant(self.dir_cuffquant, self.merge_GTF)
