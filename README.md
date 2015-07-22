@@ -107,7 +107,7 @@ Next, make the input files. You can download these files in UCSC or so on and th
 ``` bash
 vim sample_input.xls
 ==> sample_input.xls <==
-sample		brief_name		stage			sample_group    ERCC_times	RFP_polyA	GFP_polyA	CRE_polyA	end_type	rename
+sample		brief_name		stage			sample_group    ERCC_time	RFP_polyA	GFP_polyA	CRE_polyA	end_type	rename
 NAME_FOR_RAW_FQ		NAME_FOR_PROCESSING	Group_FOR_STAGE	RNA             0.0    		0.0    		0.0		   0.0		 	PE          NAME_FOR_READING
 ```
 Notice that only NAME_FOR_RAW_FQ were required that this NAME should be the same as 00.0.raw_fq/NAME.
