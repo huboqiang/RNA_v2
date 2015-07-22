@@ -68,6 +68,9 @@ make
 cd ..
 mv tabix-0.2.6.tar.bz2 install_packages
 
+### install UCSC utilities
+from http://hgdownload.cse.ucsc.edu/admin/exe/linux.x86_64/
+
 ```
 
 After that, download this script:
