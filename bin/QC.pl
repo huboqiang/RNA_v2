@@ -74,7 +74,7 @@ open LOG,">$outdir/$sample/log" or die $!;
 
 #-get the adapters list
 
-my @adapter = ("GATCGGAAGAGCACA","GATCGGAAGAGCGTC");
+my @adapter = ("AGATCGGAAGAGC", "GCTCTTCCGATCT");
 
 #-the common global variabes 
 
@@ -144,7 +144,6 @@ if ($end == 2) {
 		($read_length = length($line1_2)) if ($read_length == 0);
 		
 		#-remove adapter
-		
 		my $remove_a1 = remove_adapter($line1_2,1);
 		my $remove_a2 = remove_adapter($line2_2,2);
 		if ($remove_a1 > 0 or $remove_a2 > 0){
@@ -248,7 +247,6 @@ else {
 	chomp (my $file = `ls $indir/$sample/*.f*q.gz`);
 
 	#-open the input files
-   print $file;
    open IN_1,"zcat $file |" or die "Cannot open file $file\n", $!;
 #	open IN_1,"<:gzip","$file" or die $!;
 
