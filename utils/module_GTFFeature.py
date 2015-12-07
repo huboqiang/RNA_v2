@@ -17,8 +17,8 @@ class GTFFeature(object):
       
    def __load_GTF(self):
 
-      pat_gene = "gene_id\s+\"(\S+)\";"
-      pat_tran = "transcript_id\s+\"(\w+)\";"
+      pat_gene = "gene_name\s+\"(\S+)\";"
+      pat_tran = "transcript_name\s+\"(\S+)\";"
       pat_exon = "exon_number\s+\"*(\w+)\"*"
 
       pattern_gene = re.compile( pat_gene )
@@ -29,6 +29,9 @@ class GTFFeature(object):
       for line in f_infile:
          line  =  line.strip('\n')
          f     =  line.split('\t')
+         
+         if f[2] != "exon":
+             continue
          
          match_gene = pattern_gene.search( f[-1] )
          match_tran = pattern_tran.search( f[-1] )
@@ -45,6 +48,28 @@ class GTFFeature(object):
             exon = match_exon.group(1)
          
          if gene == "" or tran == "" or exon == "":
+            pat_gene = "gene_id\s+\"(\S+)\";"
+            pat_tran = "transcript_id\s+\"(\S+)\";"
+            pat_exon = "exon_number\s+\"*(\w+)\"*"
+            
+            pattern_gene = re.compile( pat_gene )
+            pattern_tran = re.compile( pat_tran )
+            pattern_exon = re.compile( pat_exon )
+            
+            match_gene = pattern_gene.search( f[-1] )
+            match_tran = pattern_tran.search( f[-1] )
+            match_exon = pattern_exon.search( f[-1] )
+            
+            gene = ""
+            tran = ""
+            exon = ""
+            if match_gene:
+               gene = match_gene.group(1)
+            if match_tran:
+               tran = match_tran.group(1)
+            if match_exon:
+               exon = match_exon.group(1)
+            
             if gene[0:5] != "ERCC-" and gene[0:4] != "RGC-":
                print  "ERROR line: %s; Gene %s, Tran %s, Exon %s" % (line, gene,tran,exon )
             else:
