@@ -28,27 +28,28 @@ class QcStat(object):
       if os.path.isfile( self.infile ):
          f_infile = open( self.infile,"r" )
          l_line = f_infile.readlines()
-         f_1    = l_line[1].split('\t')
-         self.raw_reads = int(f_1[0])
-         self.raw_bases = int(f_1[1])
-         self.cln_reads = int(f_1[2])
-         self.cln_bases = int(f_1[3])
-                  
-         if len( f_1[5].split(';') ) > 1:
-            self.ER_l_rate, self.ER_r_rate  = [ float(i) for i in f_1[5].split(';') ]
-            self.Q20_l_rate,self.Q20_r_rate = [ float(i) for i in f_1[6].split(';') ]
-            self.Q30_l_rate,self.Q30_r_rate = [ float(i) for i in f_1[7].split(';') ]
-            self.GC_l_rate, self.GC_r_rate  = [ float(i) for i in f_1[8].split(';') ]
-         else:
-            self.ER_l_rate  = [ float(i) for i in f_1[5].split(';') ]
-            self.Q20_l_rate = [ float(i) for i in f_1[6].split(';') ]
-            self.Q30_l_rate = [ float(i) for i in f_1[7].split(';') ]
-            self.GC_l_rate  = [ float(i) for i in f_1[8].split(';') ]
-            
-         self.N_remove  = l_line[2].split()[-1]
-         self.Q_remove  = l_line[3].split()[-1]
-         self.A_remove  = l_line[4].split()[2]
-         self.A_trimed  = l_line[4].split()[-1]
+         if len(l_line) > 0:
+            f_1    = l_line[1].split('\t')
+            self.raw_reads = int(f_1[0])
+            self.raw_bases = int(f_1[1])
+            self.cln_reads = int(f_1[2])
+            self.cln_bases = int(f_1[3])
+                     
+            if len( f_1[5].split(';') ) > 1:
+               self.ER_l_rate, self.ER_r_rate  = [ float(i) for i in f_1[5].split(';') ]
+               self.Q20_l_rate,self.Q20_r_rate = [ float(i) for i in f_1[6].split(';') ]
+               self.Q30_l_rate,self.Q30_r_rate = [ float(i) for i in f_1[7].split(';') ]
+               self.GC_l_rate, self.GC_r_rate  = [ float(i) for i in f_1[8].split(';') ]
+            else:
+               self.ER_l_rate  = [ float(i) for i in f_1[5].split(';') ]
+               self.Q20_l_rate = [ float(i) for i in f_1[6].split(';') ]
+               self.Q30_l_rate = [ float(i) for i in f_1[7].split(';') ]
+               self.GC_l_rate  = [ float(i) for i in f_1[8].split(';') ]
+               
+            self.N_remove  = l_line[2].split()[-1]
+            self.Q_remove  = l_line[3].split()[-1]
+            self.A_remove  = l_line[4].split()[2]
+            self.A_trimed  = l_line[4].split()[-1]
          f_infile.close()
 
 class TophatStat(dict):
