@@ -30,6 +30,13 @@ def get_gene_FPKM(infile):
         if gene not in M_gene:
             M_gene[gene] = []
         M_gene[gene].append(FPKM)
+        
+        gene = f[4]
+        FPKM = float(f[9])
+        if gene not in M_gene:
+            M_gene[gene] = []
+        M_gene[gene].append(FPKM)
+        
     f_infile.close()
     return M_gene
 
