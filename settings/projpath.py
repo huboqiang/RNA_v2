@@ -75,7 +75,7 @@ class UsedSoftware(object):
         ##############################################
         ######## Revise the following path!!! ########
         ##############################################
-        self.sftw_py        = "/home/huboqiang/anaconda/bin/python"
+        self.sftw_py        = "/data/Analysis/huboqiang/software/anaconda/bin/python"
         self.sftw_pl        = "/data/Analysis/huboqiang/lib/local_perl/bin/perl"
         self.sftw_tophat_dir= "/data/Analysis/huboqiang/software/tophat-2.0.12.Linux_x86_64"
         self.sftw_cflk_dir  = "/data/Analysis/huboqiang/software/cufflinks-2.2.1.Linux_x86_64"
@@ -83,7 +83,7 @@ class UsedSoftware(object):
         self.sftw_ucsc_dir  = "/data/Analysis/huboqiang/software/UCSC"
         self.sftw_samtools  = "/data/Analysis/huboqiang/software/samtools-0.1.18/samtools"
         self.sftw_bedtools  = "/data/Analysis/huboqiang/software/bedtools-2.17.0/bin/bedtools"
-        self.sftw_deseq     = "/home/huboqiang/anaconda/lib/python2.7/site-packages/HTSeq/scripts/count.py"
+        self.sftw_deseq     = "/data/Analysis/huboqiang/software/anaconda/lib/python2.7/site-packages/HTSeq/scripts/count.py"
         self.sftw_bgzip     = "/usr/local/bin/bgzip"
         self.sftw_tabix     = "/usr/local/bin/tabix"
 
