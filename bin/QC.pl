@@ -102,8 +102,8 @@ if ($end == 2) {
 
 	#-get the input files
 	
-	chomp (my $file_1 = `ls $indir/$sample/*_R1*.f*q.gz $indir/$sample/*_1.*f*q.gz $indir/$sample/*.1.*f*q.gz $indir/$sample/*.R1_sequence.fq.gz`);
-	chomp (my $file_2 = `ls $indir/$sample/*_R2*.f*q.gz $indir/$sample/*_2.*f*q.gz $indir/$sample/*.2.*f*q.gz $indir/$sample/*.R2_sequence.fq.gz`);
+	chomp (my $file_1 = `ls $indir/$sample/*_R1*.f*q.gz $indir/$sample/*_1.*f*q.gz $indir/$sample/*.1.*f*q.gz $indir/$sample/*.R1_sequence.fq.gz $indir/$sample/*.R1.clean.fastq.gz`);
+	chomp (my $file_2 = `ls $indir/$sample/*_R2*.f*q.gz $indir/$sample/*_2.*f*q.gz $indir/$sample/*.2.*f*q.gz $indir/$sample/*.R2_sequence.fq.gz $indir/$sample/*.R2.clean.fastq.gz`);
 	#-open the input files
 
 	open IN_1,"zcat $file_1 |" or die "Cannot open file $file_1\n", $!;
