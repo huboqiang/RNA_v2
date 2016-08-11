@@ -16,7 +16,7 @@ import RNA_v2.frame.module01_mapping_from_raw as m_01
 
 class RNA_Quantification(m_scpt.Scripts):
 
-    def __init__(self, ref, sam_RNAinfo, is_debug=1):
+    def __init__(self, ref, sam_RNAinfo, core_num=4, is_debug=1):
         super(RNA_Quantification, self).__init__()
         self.load_RNA_samInfo(sam_RNAinfo)
         self.s_idx = ".".join(sam_RNAinfo.split("/")[-1].split(".")[:-1])
@@ -24,6 +24,7 @@ class RNA_Quantification(m_scpt.Scripts):
 
         self.ref = ref
         self.is_debug = is_debug
+        self.core_num = 4
         self.define_files(self.ref)
 
     def run_pipeline(self, extra_GTF=None, given_GTF=None, is_MergeSam=0):
@@ -111,7 +112,7 @@ class RNA_Quantification(m_scpt.Scripts):
             l_sh_work.append("sh %s  %s" % (sh_file, brief_name))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
     def s04_novo_1_cufflinks_u(self):
@@ -127,7 +128,7 @@ class RNA_Quantification(m_scpt.Scripts):
             l_sh_work.append("sh %s  %s" % (sh_file, brief_name))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
 
@@ -150,7 +151,7 @@ class RNA_Quantification(m_scpt.Scripts):
         l_sh_work.append("sh %s  %s %s" % (sh_file, out_prefix, insam))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
     def s04_novo_3_HTSeq_unknown(self):
@@ -167,7 +168,7 @@ class RNA_Quantification(m_scpt.Scripts):
             l_sh_work.append("sh %s %s %s" %(sh_file, brief_name,unknown_GTF))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
         m_01.make_dir([ self.dir_HTS_result ])
@@ -206,7 +207,7 @@ class RNA_Quantification(m_scpt.Scripts):
         l_sh_work.append("sh %s  %s %s" % (sh_file, unknown_GTF, extra_GTF))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
     def s05_2_extra_makeGTF(self, given_GTF, given_GTF_ERCC):
@@ -219,7 +220,7 @@ class RNA_Quantification(m_scpt.Scripts):
         l_sh_work.append("sh %s  %s" % (sh_file, self.ref))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
 
@@ -235,7 +236,7 @@ class RNA_Quantification(m_scpt.Scripts):
             l_sh_work.append("sh %s  %s %s" % (sh_file, brief_name, use_gtf))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
 
@@ -258,7 +259,7 @@ class RNA_Quantification(m_scpt.Scripts):
         )
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
     def s06_1_cufflinks(self, cflk_dir, use_gtf):
@@ -273,7 +274,7 @@ class RNA_Quantification(m_scpt.Scripts):
             l_sh_work.append("sh %s  %s %s" % (sh_file, brief_name, use_gtf))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
     def s07_1_mergeFPKM(self, cflk_dir, mergeFPKM_dir):
@@ -297,5 +298,5 @@ class RNA_Quantification(m_scpt.Scripts):
             l_sh_work.append("sh %s  %s" % (sh_file, brief_name))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=self.core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)

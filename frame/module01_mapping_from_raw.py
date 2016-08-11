@@ -17,7 +17,7 @@ def make_dir(l_args):
         """ only dictionary """
         if not os.path.isdir( l_args[0] ):
             os.mkdir( l_args[0] )
-    
+
     elif len(l_args) == 2:
         """ dictionary/sample """
         if not os.path.isdir( l_args[0] ):
@@ -36,24 +36,24 @@ def make_dir(l_args):
 
 
 class Map_From_raw(m_scpt.Scripts):
-    
+
     def __init__(self, ref, sam_RNAinfo, is_debug=1):
         super(Map_From_raw, self).__init__()
-        
+
         self.s_idx = ".".join(sam_RNAinfo.split("/")[-1].split(".")[:-1])
-        
+
         self.load_RNA_samInfo(sam_RNAinfo)
         self.define_scripts(self.s_idx)
-        
+
         self.ref = ref
         self.is_debug = is_debug
         self.define_files(self.ref)
         self.M_CvtEnd = {"PE":2,"SE":1}
-        
-    def s01_QC(self):
+
+    def s01_QC(self, core_num=4):
         sh_file      = "%s/s01.QC.sh"      % (self.scripts)
         sh_work_file = "%s/s01.QC_work.sh" % (self.scripts)
-        
+
         l_sh_info = self.s_01_QC()
         l_sh_work = []
         for samp in self.samInfo_pd_RNA['sample']:
@@ -62,16 +62,16 @@ class Map_From_raw(m_scpt.Scripts):
             end       = self.samInfo_pd_RNA[ idx ]['end_type'].values[0]
             data_dype = self.M_CvtEnd[ end ]
             l_sh_work.append("sh %s %s %d" % (sh_file, samp, data_dype) )
-      
+
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
 
 
-    def s02_Tophat(self):
+    def s02_Tophat(self, core_num=1):
         sh_file      = "%s/s02.Tophat.sh"      % (self.scripts)
         sh_work_file = "%s/s02.Tophat_work.sh" % (self.scripts)
-        
+
         l_sh_info = self.s_02_Tophat()
         l_sh_work = []
         for samp in self.samInfo_pd_RNA['sample']:
@@ -84,7 +84,5 @@ class Map_From_raw(m_scpt.Scripts):
                 (sh_file, samp, brief_name, data_dype))
 
         my_job = m_jobs.run_jobs(sh_file, sh_work_file, l_sh_info, l_sh_work)
-        my_job.running_multi(cpu=8, is_debug = self.is_debug)
+        my_job.running_multi(cpu=core_num, is_debug = self.is_debug)
 #       my_job.running_SGE(vf="400m", maxjob=100, is_debug = self.is_debug)
-
-        

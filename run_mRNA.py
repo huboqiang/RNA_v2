@@ -23,13 +23,13 @@ Detail information could be reached in utils/module_create_database.py
 
 Suport genome includes:
     http://hgdownload.soe.ucsc.edu/goldenPath
-    
+
 
 Using -h or --help for more information
 
 Example:
     python %s  --ref hg19 samp_test.xls
-       
+
     """ % (sys.argv[0],sys.argv[0])
 
     description = " mRNA analysis pipeline "
@@ -40,12 +40,12 @@ Example:
         usage=usage,
         add_help_option=False
     )
-    
+
     optparser.add_option(
         "-r", "--ref", default="hg19",
         help="\nReference genome. [default: %default]"
     )
-    
+
     optparser.add_option(
         "--extra_GTF", default=None,
         help="\nExtra GTF file for lncRNA. [default: %default]"
@@ -55,7 +55,7 @@ Example:
         help="\nGiven GTF. Gene id for LncRNA should be lncGene"+\
         "while trans id should be lncTran. [default: %default]"
     )
-    
+
     optparser.add_option(
         "-h", "--help", action="help",
         help="\nShow this help message and exit."
@@ -74,16 +74,16 @@ def main():
         prepare_optparser().print_help()
         sys.exit(1)
 
-    part0 = m_db.DataBaseInit(ref, sam_RNAinfo,is_debug=0)
+    part0 = m_db.DataBaseInit(ref, sam_RNAinfo, is_debug=0)
     part0.check_files()
-  
+
     part1 = m01.Map_From_raw(ref, sam_RNAinfo, is_debug=0)
-    part1.s01_QC()
-    part1.s02_Tophat()
-   
+    part1.s01_QC(core_num=4)
+    part1.s02_Tophat(core_num=1)
+
     part2 = m02.RNA_Quantification(ref, sam_RNAinfo, is_debug=0)
     part2.run_pipeline(extra_GTF, given_GTF, is_MergeSam=1)
-    
+
     part3 = m03.SampStat(ref, sam_RNAinfo, given_GTF, is_debug=0)
     try:
         part3.Basic_Stat()
@@ -94,6 +94,6 @@ def main():
     except:
         pass
     part3.Repeat_Stat()
-    
+
 if __name__ == '__main__':
     main()
