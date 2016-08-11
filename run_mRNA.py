@@ -85,10 +85,15 @@ def main():
     part2.run_pipeline(extra_GTF, given_GTF, is_MergeSam=1)
     
     part3 = m03.SampStat(ref, sam_RNAinfo, given_GTF, is_debug=0)
-    part3.Basic_Stat()
-    part3.ERCC_Stat()
+    try:
+        part3.Basic_Stat()
+    except:
+        pass
+    try:
+        part3.ERCC_Stat()
+    except:
+        pass
     part3.Repeat_Stat()
-    
     
 if __name__ == '__main__':
     main()
