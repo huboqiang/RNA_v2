@@ -24,7 +24,7 @@ class RNA_Quantification(m_scpt.Scripts):
 
         self.ref = ref
         self.is_debug = is_debug
-        self.core_num = 4
+        self.core_num = core_num
         self.define_files(self.ref)
 
     def run_pipeline(self, extra_GTF=None, given_GTF=None, is_MergeSam=0):
