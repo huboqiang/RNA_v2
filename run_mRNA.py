@@ -81,7 +81,7 @@ def main():
     part1.s01_QC(core_num=4)
     part1.s02_Tophat(core_num=1)
 
-    part2 = m02.RNA_Quantification(ref, sam_RNAinfo, is_debug=0)
+    part2 = m02.RNA_Quantification(ref, sam_RNAinfo, core_num=4, is_debug=0)
     part2.run_pipeline(extra_GTF, given_GTF, is_MergeSam=1)
 
     part3 = m03.SampStat(ref, sam_RNAinfo, given_GTF, is_debug=0)
