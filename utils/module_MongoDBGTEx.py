@@ -21,7 +21,11 @@ import base64
 
 import RNA_v2.utils.module_MongoDB as m_mgdb
 
+<<<<<<< HEAD
 f_in = open('/home/huboqiang/.ssh/id_rsa.pub.bak', "r")
+=======
+f_in = open('/home/huboqiang/.ssh/id_rsa.pub', "r")
+>>>>>>> fa2629a13deda0b126e95fe24f9ebe04e72e85b6
 id_rsa = f_in.readline().split()[1][0:32]
 encoded = "TRoUpU6MPxd2csHTww1L6X+l5mpzzuy/JPMrvecUW1Pv0kGxXG3q11yxKhR0dVj2GnKgHvIwY2/XFOOMyGi1PwUB6ngWt/n9vXDsdUvgtrA="
 f_in.close()
@@ -120,4 +124,8 @@ class MongoGTEx(object):
         return pd_exp_plot
     
     def __del__(self):
+<<<<<<< HEAD
         self.f_exp.close()
+=======
+        self.f_exp.close()
+>>>>>>> fa2629a13deda0b126e95fe24f9ebe04e72e85b6
